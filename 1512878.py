@@ -32,13 +32,14 @@ class Population:
         if isInit:
             for i in range(0, populationSize):
                 # self.individuals[i] = Individual(genesSize).random()
+                # print(Individual(genesSize).random().genes)
                 self.individuals.append(Individual(genesSize).random())
 
     def getFittest(self):
-        result = Individual(self.individuals[0])
+        result = self.individuals[0]
         for i in range(0, self.populationSize):
-            if Individual(self.individuals[i]).getFitness() > result.getFiness():
-                result = Individual(self.individuals[i])
+            if self.individuals[i].getFitness() > result.getFiness():
+                result = self.individuals[i]
         return result
 
 
@@ -51,7 +52,7 @@ class Individual:
         for i in range(0, self.genesSize):
             # self.genes[i] = (random.randint(0, 1) == 0)
             self.genes.append(random.randint(0, 1) == 0)
-        return self.genes
+        return self
 
     def getFitness(self):
         return FitnessCal.getFitness(self)
@@ -154,12 +155,12 @@ class FitnessCal(object):
                         score += FitnessCal.weights[j + 1]
                     numberOne += 1
             if FitnessCal.k > numberOne:
-                # score += (f.k - numberOne) * -1000
+                score += (FitnessCal.k - numberOne) * -1000
                 penalty = penalty + FitnessCal.k - numberOne
             else:
-                # score += (numberOne - f.k) * -1000
+                score += (numberOne - FitnessCal.k) * -1000
                 penalty = penalty + numberOne - FitnessCal.k
-            scorePer[i] = (score * 1.0) / (numberOne * 1.0)
+            scorePer.append((score * 1.0) / (numberOne * 1.0))
 
         if penalty > 1:
             finalScore = penalty * -1000.0
