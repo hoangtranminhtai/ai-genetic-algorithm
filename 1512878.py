@@ -37,6 +37,7 @@ class Population:
 
     def getFittest(self):
         result = self.individuals[0]
+        # print(self.individuals[0].getFitness())
         for i in range(0, self.populationSize):
             if self.individuals[i].getFitness() > result.getFiness():
                 result = self.individuals[i]
